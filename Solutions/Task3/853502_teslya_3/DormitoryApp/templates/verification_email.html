@@ -1,0 +1,7 @@
+<h5>Account verification</h5>
+<p>Username: {{ user.username }}</p>
+<p>Email: {{ user.email }}</p>
+<p>Время отправки: {{ time_send }}</p>
+<p>Link: <a href="http://{{ current_site }}/verificated/{{ uid }}/{{ token }}">
+    http://{{ current_site }}/verificated/{{ uid }}/{{ token }}
+</a></p>

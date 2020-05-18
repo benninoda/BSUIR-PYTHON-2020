@@ -1,0 +1,39 @@
+{% extends 'home.html' %}
+
+{% block content %}
+    <div class="container" style="text-align: -webkit-left;
+    margin-inside: 50px; margin-top: 30px; margin-left:  200px; margin-bottom: 100px;
+    width: 800px">
+        <legend class="border-bottom mb-5">
+            <div class="row">
+                <div class="col-lg-6 col-lg-push-2">
+                  <p class="text" style="font-size: 40px; margin-left: 65%">
+                    Регистрация
+                  </p>
+                </div>
+                <div class="col-lg-12" style="margin-left: 0px">
+                  <nav  aria-label="...">
+                      <ul class="pagination  pagination-lg">
+                          {% url "register_lodger_page" as url_lodger_page %}
+                            <li class="page-item {% if url_lodger_page == request.path %} active{% endif %}">
+{#                                aria-current="page">#}
+                                  <a class="page-link" href="{{url_lodger_page}}">Зарегистрироваться как постоялец</a>
+                            </li>
+                          {% url "register_staff_page" as url_staff_page %}
+                            <li class="page-item {% if url_staff_page == request.path %} active{% endif %}">
+                                <a class="page-link" href="{{url_staff_page}}">Зарегистрироваться как персонал</a>
+                        </li>
+                      </ul>
+                    </nav>
+                </div>
+            </div>
+        </legend>
+
+        <div class="row" style="margin-left: 15%">
+                {% block signup %}
+
+                {% endblock signup %}
+        </div>
+    </div>
+
+{% endblock content%}

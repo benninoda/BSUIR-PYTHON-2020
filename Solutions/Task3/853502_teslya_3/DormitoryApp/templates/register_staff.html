@@ -1,0 +1,20 @@
+{% extends 'register.html' %}
+
+
+    {% load crispy_forms_filters %}
+
+    {% load crispy_forms_tags %}
+
+
+
+{% block signup %}
+
+    <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+              {{ form | crispy }}
+            <center>
+                <button type="submit" class="btn btn-primary">Sign up</button>
+            </center>
+    </form>
+
+{% endblock signup %}

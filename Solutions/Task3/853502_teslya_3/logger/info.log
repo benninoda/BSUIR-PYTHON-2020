@@ -1,0 +1,10 @@
+INFO Watching for file changes with StatReloader
+INFO "GET / HTTP/1.1" 302 0
+INFO "GET /strelkova/profile-24/ HTTP/1.1" 200 16584
+INFO "GET /strelkova/profile24/works HTTP/1.1" 200 19157
+INFO "GET /strelkova/profile2/works/update HTTP/1.1" 200 8637
+INFO "POST /strelkova/profile2/works/update HTTP/1.1" 200 8637
+INFO "POST /strelkova/profile2/works/update HTTP/1.1" 200 8637
+INFO /home/liza/PycharmProjects/Dormitory/Dormitory/settings.py changed, reloading.
+INFO Watching for file changes with StatReloader
+INFO /home/liza/PycharmProjects/Dormitory/Dormitory/settings.py changed, reloading.

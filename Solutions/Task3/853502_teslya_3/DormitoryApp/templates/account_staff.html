@@ -1,0 +1,270 @@
+{% extends 'home.html' %}
+{% load static %}
+{% load crispy_forms_filters %}
+
+{% load crispy_forms_tags %}
+
+    {% block content %}
+
+    <div class="container-fluid" style="text-align: -webkit-left;
+        margin-inside: 100px;
+        margin-top: 30px; margin-left:  250px; margin-bottom: 5px; width: 800px">
+
+        <legend class="border-bottom mb-4 pr-4">
+            <div class="row">
+                {% if user.verified %}
+                <img src="{% static 'checkmark.png' %}" class="col-1 pr-0" width="20px" height="50px"
+                     title="Верифицированный пользавотель" alt="verified">
+                {% else %}
+                    <img src="{% static 'questionmark.png' %}" class="col-1 pr-0" width="20px" height="50px"
+                         title="Неверифицированный пользователь" alt="not verified">
+                {% endif %}
+                <p class="text col-7 align-left" style="font-size: 35px">
+                    {{ user.username }}
+                </p>
+                <button class="btn btn-outline-info col-3 ml-5" type="button" data-toggle="modal" data-target="#myModal"
+                   style="height: 50%; margin-top: 2%; width: 80%">
+                    Редактировать
+                </button>
+
+            </div>
+        </legend>
+
+        {% if user.is_personnel %}
+        <div class="row ml-1">
+                <div class="card text-white text-center bg-dark mb-3 col-4 mx-2 shadow-lg" style="max-width: 15rem;">
+                  <div class="card-header">
+                      <h5>Имя</h5>
+                  </div>
+                  <div class="card-body">
+                    <h4 class="card-title">{{ user.first_name }}</h4>
+                  </div>
+                </div>
+
+                <div class="card text-white text-center bg-info mb-3 col-4 mx-2 shadow-lg" style="max-width: 15rem;">
+                  <div class="card-header">
+                      <h5>Отчество</h5>
+                  </div>
+                  <div class="card-body">
+                    <h4 class="card-title">{{ user.middle_name }}</h4>
+                  </div>
+                </div>
+
+
+                <div class="card text-white text-center bg-dark mb-3 col-4 mx-2 shadow-lg" style="max-width: 15rem;">
+                  <div class="card-header">
+                      <h5>Фамилия</h5>
+                  </div>
+                  <div class="card-body">
+                    <h4 class="card-title">{{ user.first_name }}</h4>
+                  </div>
+                </div>
+            </div>
+
+        <div class="row ml-1">
+                <div class="card text-white text-center bg-info mb-3 col-4 mx-2 shadow-lg" style="max-width: 15rem;">
+                  <div class="card-header">
+                      <h5>Телефон</h5>
+                  </div>
+                  <div class="card-body">
+                    <h4 class="card-title">{{ user.telephone }}</h4>
+                  </div>
+                </div>
+
+                <div class="card text-white text-center bg-dark mb-3 col-4 mx-2 shadow-lg" style="max-width: 15rem;">
+                  <div class="card-header">
+                      <h5>Email</h5>
+                  </div>
+                  <div class="card-body">
+                    <h4 class="card-title">{{ user.email }}</h4>
+                  </div>
+                </div>
+
+                <div class="card text-white text-center bg-info mb-3 col-4 mx-2 shadow-lg" style="max-width: 15rem;">
+                  <div class="card-header">
+                      <h5>Должность</h5>
+                  </div>
+                  <div class="card-body">
+                    <h4 class="card-title">{{ user.position }}</h4>
+                  </div>
+                </div>
+            </div>
+
+        <div class="row ml-1">
+            <div class="card text-white text-center bg-dark mb-3 col-4 mx-2 shadow-lg" style="max-width: 15rem;">
+              <div class="card-header">
+                  <h5>Верификация</h5>
+              </div>
+              <div class="card-body">
+                <h4 class="card-title">{% if user.verified %}Пройдена{% else %}Не пройдена{% endif %}</h4>
+              </div>
+            </div>
+
+            <div class="card text-white text-center bg-info mb-3 col-4 mx-2 shadow-lg" style="max-width: 15rem;">
+              <div class="card-header">
+                  <h5>Кабинет</h5>
+              </div>
+              <div class="card-body">
+                <h4 class="card-title">{{ user.room.room_number }}</h4>
+              </div>
+            </div>
+
+            <div class="card text-white text-center bg-dark mb-3 col-4 mx-2 shadow-lg" style="max-width: 15rem;">
+              <div class="card-header">
+                  <h5>Группа</h5>
+              </div>
+              <div class="card-body">
+                <h4 class="card-title">{% if user.is_lodger %}Жилец{% elif user.is_personnel %}
+                Персонал{% endif %}</h4>
+              </div>
+            </div>
+        </div>
+        {% elif user.is_lodger %}
+        <div class="row ml-1">
+                <div class="card text-white text-center bg-dark mb-3 col-4 mx-2 shadow-lg" style="max-width: 15rem;">
+                  <div class="card-header">
+                      <h5>Имя</h5>
+                  </div>
+                  <div class="card-body">
+                    <h4 class="card-title">{{ user.first_name }}</h4>
+                  </div>
+                </div>
+
+                <div class="card text-white text-center bg-info mb-3 col-4 mx-2 shadow-lg" style="max-width: 15rem;">
+                  <div class="card-header">
+                      <h5>Отчество</h5>
+                  </div>
+                  <div class="card-body">
+                    <h4 class="card-title">{{ user.middle_name }}</h4>
+                  </div>
+                </div>
+
+
+                <div class="card text-white text-center bg-dark mb-3 col-4 mx-2 shadow-lg" style="max-width: 15rem;">
+                  <div class="card-header">
+                      <h5>Фамилия</h5>
+                  </div>
+                  <div class="card-body">
+                    <h4 class="card-title">{{ user.first_name }}</h4>
+                  </div>
+                </div>
+            </div>
+
+        <div class="row ml-1">
+                <div class="card text-white text-center bg-info mb-3 col-4 mx-2 shadow-lg" style="max-width: 15rem;">
+                  <div class="card-header">
+                      <h5>Текущее кол-во часов</h5>
+                  </div>
+                  <div class="card-body">
+                    <h4 class="card-title">{{ user.current_clocks }}</h4>
+                  </div>
+                </div>
+
+                <div class="card text-white text-center bg-dark mb-3 col-4 mx-2 shadow-lg" style="max-width: 15rem;">
+                  <div class="card-header">
+                      <h5>Общее кол-во часов</h5>
+                  </div>
+                  <div class="card-body">
+                    <h4 class="card-title">{{ user.your_clocks }}</h4>
+                  </div>
+                </div>
+
+                <div class="card text-white text-center bg-info mb-3 col-4 mx-2 shadow-lg" style="max-width: 15rem;">
+                  <div class="card-header">
+                      <h5>Email</h5>
+                  </div>
+                  <div class="card-body">
+                    <h4 class="card-title">{{ user.email }}</h4>
+                  </div>
+                </div>
+            </div>
+
+        <div class="row ml-1">
+            <div class="card text-white text-center bg-dark mb-3 col-4 mx-2 shadow-lg" style="max-width: 15rem;">
+              <div class="card-header">
+                  <h5>Телефон</h5>
+              </div>
+              <div class="card-body">
+                <h4 class="card-title">{{ user.telephone }}</h4>
+              </div>
+            </div>
+
+            <div class="card text-white text-center bg-info mb-3 col-4 mx-2 shadow-lg" style="max-width: 15rem;">
+              <div class="card-header">
+                  <h5>Комната</h5>
+              </div>
+              <div class="card-body">
+                <h4 class="card-title">{{ user.room.room_number }}</h4>
+              </div>
+            </div>
+
+            <div class="card text-white text-center bg-dark mb-3 col-4 mx-2 shadow-lg" style="max-width: 15rem;">
+              <div class="card-header">
+                  <h5>Факультет</h5>
+              </div>
+              <div class="card-body">
+                <h4 class="card-title">{{ user.faculty }}</h4>
+              </div>
+            </div>
+        </div>
+        {% elif user.is_superuser %}
+            <a class="text-info ml-5" href="http://127.0.0.1:8000/admin">Перейти в админку</a>
+        {% endif %}
+        {% if not user.verified %}
+            <div class="row">
+            <div style="margin: 0 auto">
+                <form action="{% url 'actionUrl' %}" method='GET'>
+                <button class="btn btn-outline-danger"
+                   type="submit">
+                    Пожалуйста, пройдите верификацию
+                </button>
+                 </form>
+            </div>
+            </div>
+        {% endif %}
+
+    </div>
+
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content text-secondary">
+          <div class="modal-header bg-dark text-white">
+            <h5 class="modal-title" id="exampleModalLabel">Обновите Ваши данные</h5>
+          </div>
+
+          <div class="modal-body">
+          <form id="update_form" method="post" enctype="multipart/form-data">
+              {% csrf_token %}
+              {{ form.username | as_crispy_field}}
+              <div class="row">
+              <div class="form-group col-6">
+                  {{ form.first_name | as_crispy_field}}
+                  {{ form.middle_name | as_crispy_field}}
+                  {{ form.last_name | as_crispy_field}}
+
+              </div>
+              <div class="form-group col-6">
+                  {{ form.telephone | as_crispy_field}}
+                  {{ form.email | as_crispy_field}}
+                  {% if user.is_personnel %}
+                  {{ form.position | as_crispy_field}}
+                  {% elif user.is_lodger %}
+                  {{ form.faculty | as_crispy_field}}
+                  {% endif %}
+                  {{ form.room | as_crispy_field }}
+              </div>
+
+              </div>
+
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+            <button form="update_form" type="submit" class="btn btn-info">Сохранить изменения</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+{% endblock %}

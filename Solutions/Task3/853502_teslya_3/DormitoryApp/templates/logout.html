@@ -1,0 +1,23 @@
+{% extends 'home.html' %}
+{% load crispy_forms_filters %}
+
+{% load crispy_forms_tags %}
+
+    {% block content %}
+
+     <h1 style="text-align: center; margin-top: 50px">
+        Выход
+    </h1>
+    <div class="container" style="text-align: -webkit-left; margin-top: 50px; margin-bottom: 50px; margin-inside: 30px;
+        width: 500px">
+
+        <form method="post">
+            {% csrf_token %}
+            {{ form | crispy }}
+            <button type="submit" class="btn btn-success">Выйти</button>
+        </form>
+
+    </div>
+
+
+{% endblock %}

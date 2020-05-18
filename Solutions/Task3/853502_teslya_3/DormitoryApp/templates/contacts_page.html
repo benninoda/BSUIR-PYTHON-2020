@@ -1,0 +1,43 @@
+{% extends 'home.html' %}
+{% load crispy_forms_filters %}
+
+{% block content %}
+
+    <div class="container" style="text-align: -webkit-left;
+        margin-inside: 50px;
+        margin-top: 30px; margin-left:  250px; margin-bottom: 100px; width: 700px">
+        <legend class="border-bottom mb-5">
+            <div class="row">
+                <p class="text col-8" style="font-size: 25px">
+                    Контакты персонала
+                </p>
+                <a class="btn btn-outline-info col-3" href="{% url "message_to_dormitory_page" %}"
+                       style="height: 50%; width: 80%">
+                        Связаться
+                </a>
+            </div>
+        </legend>
+
+
+        <div class="row">
+            {% for contact in object_list %}
+                {% if contact.is_personnel %}
+                  <div class="col-8" style="margin: 0 auto">
+                    <div class="card">
+                      <div class="card-body">
+                        <h4 class="card-title text-primary">{{ contact.position }}</h4>
+                        <p class="card-text"><b>ФИО:</b> {{ contact.first_name }} {{ contact.middle_name }} {{ contact.last_name }}</p>
+                        <p class="card-text"><b>Телефон:</b> {{ contact.telephone }}</p>
+                        <p class="card-text"><b>Email:</b> {{ contact.email }}</p>
+                      </div>
+                    </div>
+                  </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+
+
+    </div>
+
+
+{% endblock %}

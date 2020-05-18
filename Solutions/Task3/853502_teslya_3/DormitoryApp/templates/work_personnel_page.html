@@ -1,0 +1,88 @@
+{% extends 'home.html' %}
+{% load crispy_forms_filters %}
+
+{% block content %}
+
+    <div class="container" style="text-align: -webkit-left;
+        margin-inside: 50px;
+        margin-top: 30px; margin-left:  250px; margin-bottom: 100px; width: 700px">
+        <legend class="border-bottom mb-5">
+            <div class="row">
+                <p class="text col-8" style="font-size: 25px">
+                    Журнал отработок
+                </p>
+                <button class="btn btn-outline-success col-3" type="button" data-toggle="modal" data-target="#myModal"
+                       style="height: 50%; width: 80%">
+                        Добавить
+                </button>
+            </div>
+        </legend>
+
+        <div class="row">
+            {% for work in object_list %}
+                  <div class="col-12">
+                    <div class="card">
+                      <div class="card-body">
+                        <h5 class="card-title">{{ work.name }}</h5>
+                          <div class="row">
+                              <div class="col-8">
+                                  <p class="card-text"> Часы за выполнение: {{ work.clock }}</p>
+                                  <p class="card-text"> Дата начала: {{ work.date_from }}</p>
+                                  <p class="card-text"> Дата конца: {{ work.date_to }}</p>
+                              </div>
+                                <div class="col-4">
+                                    <form action="" method="post">
+                                        {% csrf_token %}
+                                        <a class="btn btn-outline-warning my-1"
+                                           href="{% url "update_works" name=user.username pk=user.pk num=work.pk%}">Редактировать</a>
+{#                                        <a class="btn btn-outline-danger" type="submit"#}
+{#                                           href="{% url "delete_works" name=user.username pk=user.pk num=work.pk%}">Удалить</a>#}
+                                    </form>
+                                    <div style="margin: 0 auto">
+                                         <form id="delete_form" action="{% url 'delete_works' pk=work.pk %}" method="post">{% csrf_token %}</form>
+                                          <a class="btn btn-outline-danger px-4" href="javascript:void()" onclick="delete_question()">Удалить</a>
+                                           <script>
+                                              function delete_question() {
+                                                  if (confirm("Вы уверены?")) {
+                                                      document.getElementById('delete_form').submit()
+                                                     }
+                                                }
+                                           </script>
+                                    </div>
+                                </div>
+
+                          </div>
+                      </div>
+                    </div>
+                  </div>
+            {% endfor %}
+        </div>
+
+
+    </div>
+
+
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content text-secondary">
+          <div class="modal-header bg-dark text-white">
+            <h5 class="modal-title" id="exampleModalLabel">Добавьте запись</h5>
+          </div>
+
+          <div class="modal-body">
+          <form id="update_form" method="post" enctype="multipart/form-data">
+              {% csrf_token %}
+              {{ form | crispy}}
+
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+            <button form="update_form" type="submit" class="btn btn-info">Сохранить изменения</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+{% endblock %}

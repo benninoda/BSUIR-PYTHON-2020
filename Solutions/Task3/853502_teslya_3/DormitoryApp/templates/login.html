@@ -1,0 +1,32 @@
+{% extends 'home.html' %}
+{% load crispy_forms_filters %}
+
+{% load crispy_forms_tags %}
+
+    {% block content %}
+
+    <div class="container" style="text-align: -webkit-left;
+        margin-inside: 100px;
+        margin-top: 30px; margin-left:  350px; margin-bottom: 100px; width: 500px">
+        <form method="post" enctype="multipart/form-data">
+        <legend class="border-bottom mb-6">
+            <p class="text" style="font-size: 35px">
+                Авторизация
+            </p>
+        </legend>
+
+            {% csrf_token %}
+            {{ form | crispy }}
+            <button type="submit" class="btn btn-primary col-lg-2 col-lg-offset-5" style="margin-top: 15px">
+                Войти</button>
+        </form>
+
+        <legend class="border-top mb-6" style="margin-top: 30px">
+            <p class="text">
+                Нет аккаунта? <a href="{% url 'register_lodger_page' %}">Зарегистрируйтесь!</a>
+            </p>
+        </legend>
+    </div>
+
+
+{% endblock %}
