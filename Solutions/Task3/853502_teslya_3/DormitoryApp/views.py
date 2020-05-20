@@ -1,5 +1,3 @@
-from pyexpat.errors import messages
-
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import Group
@@ -12,9 +10,9 @@ from django.shortcuts import render, get_object_or_404
 from django.urls import reverse, reverse_lazy
 from django.views.generic import ListView, CreateView, DetailView, RedirectView, UpdateView, TemplateView, DeleteView
 
-from .utils import send_email_to_user
+from .utils import send_email_to_user, send_rent_email_to_user
 from .models import CheckInForm, RentForm, RulesEntry, User, UserForm, WorkEntry, WorkEntryCreateForm, \
-    MessageToDormitoryForm, MessageToDormitory
+    CheckInEntry, RentEntry, MessageTo, MessageToForm, MessageToAnswerRent, MessageToAnswerRentForm
 from .forms import create_groups, UserCreationPersonnelForm, UserCreationLodgerForm, MyUserChangeForm, \
     UserLodgerOrPersonnelChangeForm
 import logging
@@ -143,9 +141,9 @@ class ContactsView(ListView):
 
 
 class MessageToDormitoryView(CreateView):
-    model = MessageToDormitory
+    model = MessageTo
     template_name = 'message_to_dormitory.html'
-    form_class = MessageToDormitoryForm
+    form_class = MessageToForm
     success_url = 'contacts_page'
 
     def get_success_url(self, *args, **kwargs):
@@ -192,6 +190,13 @@ class WorkPersonnelUpdateView(UpdateView):
         return reverse(self.success_url)
 
 
+class WorkLodgerView(ListView):
+    model = WorkEntry
+    template_name = 'work_personnel_update_page.html'
+    form_class = WorkEntryCreateForm
+    success_url = 'redirect_works_page'
+
+
 class WorkEntryDeleteView(LoginRequiredMixin, DeleteView):
     model = WorkEntry
     template_name = 'work_personnel_page.html'
@@ -199,7 +204,6 @@ class WorkEntryDeleteView(LoginRequiredMixin, DeleteView):
     success_msg = 'Запись удалена'
 
     def get_success_url(self, *args, **kwargs):
-        print('alooo')
         return reverse(self.success_url)
 
 
@@ -238,7 +242,34 @@ def login_required_verification_send(request):
                                         kwargs={'pk': request.user.id, 'name': request.user.username}))
 
 
+class LoginRequiredRentSend(LoginRequiredMixin, CreateView):
+    model = MessageToAnswerRent
+    template_name = 'create_message_rent_page.html'
+    form_class = MessageToAnswerRentForm
+    success_url = 'rent_personnel_page'
+
+    def get_success_url(self, *args, **kwargs):
+        send_rent_email_to_user(mess=MessageToAnswerRent.objects.last())
+        return reverse(self.success_url)
+
+
+@login_required
+def login_required_rent_send(request):
+    return HttpResponseRedirect(reverse('actionSendRent',
+                                        kwargs={'pk': request.user.id, 'name': request.user.username}))
+
+
 class EggView(TemplateView):
     template_name = 'egg_page.html'
+
+
+class PersonnelRentView(ListView):
+    model = RentEntry
+    template_name = "rent_personal_page.html"
+
+
+class PersonnelCheckInView(ListView):
+    model = CheckInEntry
+    template_name = "checkin_personnel_page.html"
 
 # Create your views here.

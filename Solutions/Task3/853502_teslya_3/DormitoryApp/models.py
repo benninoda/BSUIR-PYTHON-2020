@@ -16,6 +16,7 @@ class CheckInEntry(models.Model):
     name = models.CharField(max_length=20)
     middle_name = models.CharField(max_length=20)
     surname = models.CharField(max_length=20)
+    # telephone = models.CharField(max_length=12, default=None)
     email = models.EmailField(default=None)
     faculty = models.CharField(max_length=20)
     course = models.CharField(max_length=2, choices=YEAR_OF_EDUCATION)
@@ -67,9 +68,8 @@ class Room(models.Model):
 class RentEntry(models.Model):
     name = models.CharField(max_length=20, default=None)
     email = models.EmailField(default=None)
-    telephone = models.CharField(max_length=13, default=None)
+    telephone = models.CharField(max_length=13)
     room = models.ForeignKey('Room', on_delete=models.CASCADE)
-    cost = models.IntegerField(default=4)
     date_from = models.DateField()
     date_to = models.DateField()
 
@@ -139,15 +139,30 @@ class WorkEntryCreateForm(ModelForm):
             self.fields[key].required = False
 
 
-class MessageToDormitory(models.Model):
+class MessageTo(models.Model):
     name = models.CharField(max_length=50)
-    email = models.EmailField()
+    email = models.EmailField(default=None)
     text = models.TextField()
 
 
-class MessageToDormitoryForm(ModelForm):
+class MessageToForm(ModelForm):
     class Meta:
-        model = MessageToDormitory
+        model = MessageTo
         fields = '__all__'
 
+
+class MessageToAnswerRent(models.Model):
+    name = models.CharField(max_length=50)
+    email = models.EmailField(default=None)
+    text = models.TextField()
+    cost = models.PositiveIntegerField(default=0)
+
+    def __str__(self):
+        return 'Ответ {} на аренду'.format(self.pk)
+
+
+class MessageToAnswerRentForm(ModelForm):
+    class Meta:
+        model = MessageToAnswerRent
+        fields = '__all__'
 

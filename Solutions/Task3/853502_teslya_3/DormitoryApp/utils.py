@@ -34,3 +34,20 @@ class Sender:
 
     def __call__(self, user):
         send_email_to_user(self.request, user)
+
+
+def send_rent_email_to_user(mess):
+    logger = logging.getLogger('django')
+    email_subject = 'Ответ на ваше заявление на аренду'
+    print(mess.name)
+    message = render_to_string('rent_email.html', {
+        'name': mess.name,
+        'time_send': timezone.now(),
+        'text': mess.text,
+        'cost': mess.cost,
+    })
+    to_email = mess.email
+    email = EmailMessage(subject=email_subject, body=message, to=[to_email])
+    email.content_subtype = 'html'
+    email.send()
+    logger.info('Rent mail send to {}'.format(mess.name))

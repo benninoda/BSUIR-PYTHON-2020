@@ -11,10 +11,14 @@
                 <p class="text col-8" style="font-size: 25px">
                     Журнал отработок
                 </p>
-                <button class="btn btn-outline-success col-3" type="button" data-toggle="modal" data-target="#myModal"
-                       style="height: 50%; width: 80%">
-                        Добавить
-                </button>
+                {% if user.is_personnel %}
+                    <button class="btn btn-outline-success col-3" type="button" data-toggle="modal" data-target="#myModal"
+                           style="height: 50%; width: 80%">
+                            Добавить
+                    </button>
+                {% else %}
+                    Ваши часы: {{ user.current_clocks }}
+                {% endif %}
             </div>
         </legend>
 
@@ -30,14 +34,13 @@
                                   <p class="card-text"> Дата начала: {{ work.date_from }}</p>
                                   <p class="card-text"> Дата конца: {{ work.date_to }}</p>
                               </div>
+                              {%  if user.is_personnel %}
                                 <div class="col-4">
                                     <form action="" method="post">
                                         {% csrf_token %}
                                         <a class="btn btn-outline-warning my-1"
                                            href="{% url "update_works" name=user.username pk=user.pk num=work.pk%}">Редактировать</a>
-{#                                        <a class="btn btn-outline-danger" type="submit"#}
-{#                                           href="{% url "delete_works" name=user.username pk=user.pk num=work.pk%}">Удалить</a>#}
-                                    </form>
+                                   </form>
                                     <div style="margin: 0 auto">
                                          <form id="delete_form" action="{% url 'delete_works' pk=work.pk %}" method="post">{% csrf_token %}</form>
                                           <a class="btn btn-outline-danger px-4" href="javascript:void()" onclick="delete_question()">Удалить</a>
@@ -50,7 +53,7 @@
                                            </script>
                                     </div>
                                 </div>
-
+                              {% endif %}
                           </div>
                       </div>
                     </div>

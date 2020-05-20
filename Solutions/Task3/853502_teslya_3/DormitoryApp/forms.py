@@ -30,6 +30,10 @@ class MyUserCreationFormAdmin(UserCreationForm):
 
 
 class UserCreationLodgerForm(UserCreationForm):
+    middle_name = CharField(required=False, label='Отчество')
+    telephone = CharField(required=True, label='Телефон')
+    room = ModelChoiceField(queryset=Room.objects.all(), required=False, label='Кабинет/комната')
+    faculty = CharField(required=False, label='Факультет')
 
     class Meta(UserCreationForm):
         model = User
@@ -37,6 +41,11 @@ class UserCreationLodgerForm(UserCreationForm):
 
 
 class UserCreationPersonnelForm(UserCreationForm):
+    middle_name = CharField(required=False, label='Отчество')
+    telephone = CharField(required=True, label='Телефон')
+    room = ModelChoiceField(queryset=Room.objects.all(), required=False, label='Кабинет/комната')
+    position = CharField(required=False, label='Должность')
+
     class Meta(UserCreationForm):
         model = User
         fields = ('username', 'first_name',  'middle_name', 'last_name', 'telephone', 'position', 'room', 'email')
@@ -61,7 +70,6 @@ class UserLodgerOrPersonnelChangeForm(UserChangeForm):
     faculty = CharField(required=False, label='Факультет')
     room = ModelChoiceField(queryset=Room.objects.all(), required=False, label='Кабинет/комната')
     position = CharField(required=False, label='Должность')
-    # send_mail = BooleanField(required=False, label='Верификация', help_text='Отметьте для отправки письма')
 
     class Meta(UserChangeForm):
         model = User

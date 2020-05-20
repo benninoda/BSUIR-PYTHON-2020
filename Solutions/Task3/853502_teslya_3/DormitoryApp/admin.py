@@ -4,7 +4,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
 from .forms import MyUserCreationFormAdmin, MyUserChangeForm
-from .models import User, Room, CheckInEntry, RentEntry, RulesEntry, WorkEntry, MessageToDormitory
+from .models import User, Room, CheckInEntry, RentEntry, RulesEntry, WorkEntry, MessageTo
 from .utils import Sender
 
 
@@ -17,7 +17,6 @@ class MyUserAdmin(UserAdmin):
     add_form = MyUserCreationFormAdmin
     form = MyUserChangeForm
     model = User
-
     actions = [send_email_to_user]
 
     list_display = ['username', 'room', 'middle_name', 'telephone', 'faculty', 'position', 'verified']
@@ -28,7 +27,7 @@ class MyUserAdmin(UserAdmin):
     # this will allow to change these fields in admin module
 
 
-admin.site.register(MessageToDormitory)
+admin.site.register(MessageTo)
 admin.site.register(User, MyUserAdmin)
 admin.site.register(Room)
 admin.site.register(CheckInEntry)

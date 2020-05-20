@@ -1,0 +1,48 @@
+{% extends 'home.html' %}
+{% load crispy_forms_filters %}
+
+{% block content %}
+
+    <div class="container" style="text-align: -webkit-left;
+        margin-inside: 50px;
+        margin-top: 30px; margin-left:  250px; margin-bottom: 100px; width: 700px">
+        <legend class="border-bottom mb-5">
+            <div class="row">
+                <p class="text" style="font-size: 35px; margin: 0 auto; font-family: Serif,serif">
+                    Аренда
+                </p>
+            </div>
+        </legend>
+
+
+        <div class="row">
+            {% for contact in object_list %}
+                  <div class="col-10" style="margin: 0 auto">
+                    <div class="card">
+                      <div class="card-body">
+                       <div class="row">
+                           <div class="col-8">
+                                <p class="card-text"><b>ФИО:</b> {{ contact.name }}</p>
+                                <p class="card-text"><b>Телефон:</b> {{ contact.telephone }}</p>
+                                <p class="card-text"><b>Email:</b> {{ contact.email }}</p>
+                                <p class="card-text"><b>Комната:</b> {{ contact.room }}</p>
+                                <p class="card-text"><b>С:</b> {{ contact.date_from }}</p>
+                                <p class="card-text"><b>До:</b> {{ contact.date_from }}</p>
+                            </div>
+                           <div class="col-4">
+                                 <a class="btn btn-outline-info col-3" href="{% url 'actionSendRent' pk=contact.pk %}">
+                                    Ответить
+                                </a>
+                            </div>
+                       </div>
+                      </div>
+                    </div>
+                  </div>
+            {% endfor %}
+        </div>
+
+
+    </div>
+
+
+{% endblock %}

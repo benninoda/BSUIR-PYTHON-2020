@@ -4,7 +4,8 @@ from django.urls import path
 from .views import HomeView, SignUpView, CheckInView, RentView, RulesView, SignUpLodgerView, SignUpPersonnelView, \
     ProfileDetailView, ContactsView, SignInView, loginRequiredView, LodgersView, WorkPersonnelView, ActivateUserView, \
     login_required_works_view, MessageToDormitoryView, login_required_verification_send, WorkPersonnelUpdateView, \
-    EggView, WorkEntryDeleteView
+    EggView, WorkEntryDeleteView, PersonnelRentView, PersonnelCheckInView, \
+    login_required_rent_send, LoginRequiredRentSend, WorkLodgerView
 
 urlpatterns = [
     path('', HomeView.as_view(), name='home_page'),
@@ -15,8 +16,11 @@ urlpatterns = [
     path('register/staff/', SignUpPersonnelView.as_view(), name='register_staff_page'),
     path('<slug:name>/profile-<int:pk>/', ProfileDetailView.as_view(), name='profile_page'),
     path('actionUrl/', login_required_verification_send, name='actionUrl'),
+    path('sendRent/redirect', login_required_rent_send, name='redirect_meil_page'),
+    path('sendRent/-<int:pk>/', LoginRequiredRentSend.as_view(), name='actionSendRent'),
     path('<slug:name>/profile<int:pk>/lodgers', LodgersView.as_view(), name='lodgers_page'),
     path('<slug:name>/profile<int:pk>/works', WorkPersonnelView.as_view(), name='works_page_hi'),
+    path('<slug:name>/profile<int:pk>/works', WorkLodgerView.as_view(), name='works_page_lodger'),
     path('<slug:name>/profile<int:pk>/works/update<int:num>', WorkPersonnelUpdateView.as_view(), name='update_works'),
     path('works/delete<int:pk>', WorkEntryDeleteView.as_view(), name='delete_works'),
     path('verificated/<str:uid>/<str:token>', ActivateUserView.as_view(), name='verificated_page'),
@@ -28,6 +32,7 @@ urlpatterns = [
     path('check_in/', CheckInView.as_view(), name='checkin_page'),
     path('rent/', RentView.as_view(), name='rent_page'),
     path('rules/', RulesView.as_view(), name='rules_page'),
-
+    path('personnel/rent/', PersonnelRentView.as_view(), name='rent_personnel_page'),
+    path('personnel/checkin/', PersonnelCheckInView.as_view(), name='checkin_personnel_page'),
     # path('lodgers/', LodgerListView.as_view(), name='lodger_list_page'),
 ]

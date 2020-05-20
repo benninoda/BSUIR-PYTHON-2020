@@ -109,17 +109,18 @@
           <ul class="nav nav-pills col-3" style="margin-top: 4px; margin-bottom: 4px">
             {% if user.is_personnel %}
                 <li class="nav-item border-bottom">
-                    {% url "rules_page" as url_rules %}
-                    <a class="btn {% if url_rules == request.path %}active{% endif %}" style="color: #ffffff;
+                    {% url "checkin_personnel_page" as url_checkin_personnel_page %}
+                    <a class="btn {% if url_checkin_personnel_page == request.path %}active{% endif %}" style="color: #ffffff;
                         font-family: 'Oswald', sans-serif; font-size: 1.5em"
-                       href="{{ url_rules}}">
+                       href="{{ url_checkin_personnel_page }}">
                         Заявления
                     </a>
                 </li>
                 <li class="nav-item border-bottom">
-                    <a class="btn {% if url_rules == request.path %}active{% endif %}" style="color: #ffffff;
+                    {% url "rent_personnel_page" as url_personnel_rent_page %}
+                    <a class="btn {% if url_personnel_rent_page == request.path %}active{% endif %}" style="color: #ffffff;
                         font-family: 'Oswald', sans-serif; font-size: 1.5em"
-                       href="{{ url_rules}}">
+                       href="{{ url_personnel_rent_page}}">
                         Аренда
                     </a>
                 </li>
@@ -141,10 +142,10 @@
                 </li>
             {% elif user.is_lodger%}
                 <li class="nav-item border-bottom">
-                    {% url "rules_page" as url_rules %}
-                    <a class="btn {% if url_rules == request.path %}active{% endif %}" style="color: #ffffff;
+                    {% url "works_page_lodger" name=user.username pk=user.pk  as url_works_page_lodger %}
+                    <a class="btn {% if url_works_page_lodger == request.path %}active{% endif %}" style="color: #ffffff;
                         font-family: 'Oswald', sans-serif; font-size: 1.5em"
-                       href="{{ url_rules}}">
+                       href="{{ url_works_page_lodger }}">
                         Отработки
                     </a>
                 </li>
